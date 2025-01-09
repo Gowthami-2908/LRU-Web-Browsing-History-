@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Browsing History (LRU Cache)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+        }
+        input {
+            padding: 8px;
+            width: 80%;
+        }
+        button {
+            padding: 8px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 8px;
+            background: #f4f4f4;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Web Browsing History</h1>
+
+    <input type="text" id="urlInput" placeholder="Enter URL...">
+    <button onclick="addHistory()">Add URL</button>
+
+    <h2>History:</h2>
+    <ul id="historyList">
+        <!-- History items will be dynamically populated here -->
+    </ul>
+</div>
+
+<script>
+    // Function to fetch history from backend and display it
+    async function fetchHistory() {
+        const response = await fetch('http://localhost:5000/history');
+        const history = await response.json();
+        const historyList = document.getElementById('historyList');
+        historyList.innerHTML = '';
+        history.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item[1];  // URL is the second item in the tuple
+            historyList.appendChild(li);
+        });
+    }
+
+    // Function to add a URL to the browsing history
+    async function addHistory() {
+        const url = document.getElementById('urlInput').value;
+        if (url) {
+            const response = await fetch('http://localhost:5000/history', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: url })
+            });
+
+            if (response.ok) {
+                fetchHistory();  // Refresh history list
+            } else {
+                alert('Error adding URL');
+            }
+            document.getElementById('urlInput').value = '';  // Clear input
+        } else {
+            alert('Please enter a URL');
+        }
+    }
+
+    // Initial fetch of history when the page loads
+    fetchHistory();
+</script>
+
+</body>
+</html>
