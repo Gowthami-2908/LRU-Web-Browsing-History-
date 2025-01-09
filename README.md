@@ -1,2 +1,4 @@
-# LRU-Web-Browsing-History-
-![Screenshot 2025-01-09 101857](https://github.com/user-attachments/assets/78ec6ac4-c6f0-4a25-9aeb-3618eca69242)
+# LRU-Web-Browsing-History-!
+[Screenshot 2025-01-09 215954](https://github.com/user-attachments/assets/c66f89a2-07bf-41a9-8f61-9c5a6f1fa967)
+
+
