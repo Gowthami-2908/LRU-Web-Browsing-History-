@@ -1,62 +1,63 @@
 from flask import Flask, request, jsonify
 from collections import OrderedDict
-from flask_cors import CORS  # Import CORS
+from flask_cors import CORS  
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)  
 
 # LRU Cache Implementation
-class LRUCache:
-    def __init__(self, capacity: int):
-        self.capacity = capacity
-        self.cache = OrderedDict()
+class RecentUrlsCache:
+    def __init__(self, max_capacity: int):
+        """Initialize the cache with a specified capacity."""
+        self.max_capacity = max_capacity
+        self.urls_cache = OrderedDict()  
 
-    def get(self, key: str) -> str:
-        """Retrieve a value from the cache and mark it as recently used."""
-        if key not in self.cache:
-            return None
-        # Move to the end to mark it as recently used
-        self.cache.move_to_end(key)
-        return self.cache[key]
+    def retrieve_url(self, key: str) -> str:
+        """Fetch a URL from the cache and mark it as recently accessed."""
+        if key not in self.urls_cache:
+            return None  # Return None if the URL is not in the cache
+        # Move the accessed URL to the end to mark it as the most recently used
+        self.urls_cache.move_to_end(key)
+        return self.urls_cache[key]
 
-    def put(self, key: str, value: str):
-        """Add a new key-value pair to the cache and maintain the LRU order."""
-        if key in self.cache:
-            # Update the value and move it to the end (most recent)
-            self.cache.move_to_end(key)
-        self.cache[key] = value
-        if len(self.cache) > self.capacity:
-            # Pop the first (least recently used) item
-            self.cache.popitem(last=False)
+    def store_url(self, key: str, value: str):
+        """Store a URL in the cache, and evict the least recently used if necessary."""
+        if key in self.urls_cache:
+            # If the URL already exists, move it to the most recent position
+            self.urls_cache.move_to_end(key)
+        self.urls_cache[key] = value
+        
+        # Check if the cache exceeds the maximum capacity and remove the least recently used item
+        if len(self.urls_cache) > self.max_capacity:
+            self.urls_cache.popitem(last=False)
 
-    def get_all(self):
-        """Return all cache items in the order of most recently used to least recently used."""
-        return list(self.cache.items())
+    def get_all_urls(self):
+        """Return all URLs in the cache, ordered from most recently used to least used."""
+        return list(self.urls_cache.items())
 
-# Initialize LRU cache with a capacity of 5 URLs
-cache = LRUCache(5)
+# Initialize the cache with a maximum capacity of 5 URLs
+url_cache = RecentUrlsCache(5)
 
-# Route to get all browsing history
+# Route to retrieve the entire history of URLs
 @app.route('/history', methods=['GET'])
-def get_history():
-    # Get the full browsing history from the cache
-    history = cache.get_all()
-    return jsonify(history)
+def get_browsing_history():
+    """Return the list of URLs in the cache."""
+    history = url_cache.get_all_urls()
+    return jsonify(history)  # Return the list as JSON response
 
-# Route to add a URL to the browsing history
+# Route to add a new URL to the browsing history
 @app.route('/history', methods=['POST'])
-def add_history():
-    # Get the URL from the incoming JSON request
+def add_to_browsing_history():
+    """Add a new URL to the cache."""
     data = request.json
     url = data.get('url')
     
     if not url:
-        return jsonify({"error": "URL is required"}), 400  # If URL is missing, return error
+        return jsonify({"error": "URL is required"}), 400  # If URL is missing, return an error response
     
-    # Add the URL to the cache
-    cache.put(url, url)
-    return jsonify({"message": "URL added successfully!"}), 201
+    url_cache.store_url(url, url)  # Store the URL in the cache
+    return jsonify({"message": "URL successfully added to history!"}), 201
 
 if __name__ == '__main__':
-    # Run the Flask app on localhost:5000
+    # Start the Flask server on localhost:5000
     app.run(debug=True)
