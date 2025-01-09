@@ -2,15 +2,15 @@
 
 [Screenshot 2025-01-09 215954](https://github.com/user-attachments/assets/c66f89a2-07bf-41a9-8f61-9c5a6f1fa967)
 
-# LRU(Web-Browsing-History):
+ LRU(Web-Browsing-History):
 The Least Recently Used (LRU) cache is a type of cache management strategy used to store data in a way that ensures the most recently accessed items are kept in memory, while the least recently accessed ones are discarded when the cache is full. It is a method used to manage limited memory resources efficiently, such as in computer systems or applications that handle large amounts of data or requests.
 
 
-# How LRU Cache Works:
+ How LRU Cache Works:
 In an LRU cache, data is stored in a way that every time an item is accessed (either read or updated), it is moved to the "most recently used" position. This is done to ensure that the cache prioritizes recent items and, when the cache reaches its capacity, evicts the item that has not been used for the longest period of time.
 
 
-# Data Structures Used in LRU Cache:
+ Data Structures Used in LRU Cache:
 The LRU cache implementation typically requires two key data structures to work efficiently:
 Ordered Dictionary (or Linked List): To track the order of access and easily move items around.
 OrderedDict (in Python) or a Doubly Linked List are commonly used.
