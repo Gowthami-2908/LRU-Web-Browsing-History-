@@ -2,7 +2,8 @@
 
 [Screenshot 2025-01-09 215954](https://github.com/user-attachments/assets/c66f89a2-07bf-41a9-8f61-9c5a6f1fa967)
 
- LRU(Web-Browsing-History):
+ INTRODUCTION:
+LRU(Web-Browsing-History):
 The Least Recently Used (LRU) cache is a type of cache management strategy used to store data in a way that ensures the most recently accessed items are kept in memory, while the least recently accessed ones are discarded when the cache is full. It is a method used to manage limited memory resources efficiently, such as in computer systems or applications that handle large amounts of data or requests.
 
 
