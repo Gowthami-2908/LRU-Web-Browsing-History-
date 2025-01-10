@@ -3,7 +3,8 @@
 1.Introduction:_
 In modern web browsing, users often visit the same websites multiple times. Web browsers store the history of these websites for faster access. However, with limited memory, the browser cannot keep the history of every visited page. The LRU (Least Recently Used) algorithm helps to efficiently manage and maintain the browsing history by removing the least recently visited pages when space is needed for new ones. This ensures that the most relevant pages remain accessible, enhancing user experience.
 
-Key elements: mat
+Key elements: 
+
 *Problem statement: Efficiently managing limited memory for web browsing history.
 *Objectives: Design a system that can keep track of the most recent browsing history and evict the least used history entries when memory is full.
 *Motivation: Enhance performance and user experience by managing history efficiently without consuming excessive memory.
@@ -13,6 +14,7 @@ Key elements: mat
 The solution domain for the web browsing history management involves developing a mechanism to store and retrieve web pages in such a way that the most recently used pages are retained in memory while older, less frequently accessed pages are evicted.
 
 Key elements:
+
 *Problem domain: Web browsers must store browsing history, but storage space is limited. Browsing history must be managed to keep the most relevant pages available and 
  remove older, less visited ones.
 *Existing solutions: Some browsers use simple FIFO (First In, First Out) caching or other algorithms, but these do not take into account the frequency of access. The LRU 
@@ -23,6 +25,7 @@ Key elements:
 The technology used to implement the LRU Cache for web browsing history includes specific algorithms and data structures that provide efficient look-up, insertion, and eviction operations.
 
 Key elements:
+
 *Programming languages: Typically implemented in languages like C++, Java, or Python due to their built-in data structures and libraries that can facilitate efficient 
  memory management.
 *Data structures: The LRU cache uses a combination of a doubly linked list and a hash map to provide constant-time operations for look-up, insertion, and eviction.
@@ -39,6 +42,7 @@ Why chosen?: Hash maps provide O(1) time complexity for insertions and look-ups,
 
 #Doubly Linked List: A doubly linked list is used to store the pages in the cache. Each node represents a page in the browser history. The most recently accessed pages are moved to the front of the list, while the least recently accessed pages are moved to the back.
 Why chosen?: The doubly linked list allows O(1) time complexity for insertion, deletion, and rearrangement, which is essential for managing the browsing history dynamically.
+
 Key elements:
 
 Hash map enables constant-time look-up and removal of history items.
@@ -67,6 +71,7 @@ The combination of hash maps and doubly linked lists is the most efficient known
 The LRU algorithm provides an efficient solution to the problem of limited memory in web browsers by ensuring that the most recently accessed pages are retained in memory, while older and less accessed pages are evicted when necessary. By combining hash maps and doubly linked lists, the algorithm can perform all required operations in constant time, ensuring fast and efficient memory management.
 
 Key elements:
+
 Summary of results: The LRU cache provides an optimal way to manage web browsing history, improving performance by ensuring that users can quickly access the most relevant pages.
 *Implications: This solution enhances the user experience by optimizing memory usage and minimizing the need to reload web pages that are frequently accessed.
 *Limitations: The LRU cache implementation depends on the maximum size of the cache being fixed; if the cache size is too small, users may experience performance 
